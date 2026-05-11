@@ -5,7 +5,7 @@ import socialLinks from '../link_media/link.json';
 const Contact = () => {
     const contactInfo = [
         { icon: <Mail />, title: 'Email', value: socialLinks.mail, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-500/10' },
-        { icon: <Phone />, title: 'Phone', value: '+62 812 3456 7890', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-500/10' },
+        { icon: <Phone />, title: 'Phone', value: '+62 897 0973 729', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-500/10' },
         { icon: <MapPin />, title: 'Location', value: 'Sidoarjo, Jawa Timur, Indonesia', color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-500/10' }
     ];
 

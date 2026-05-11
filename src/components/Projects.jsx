@@ -38,10 +38,10 @@ const Projects = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.2, duration: 0.8 }}
-                            className="group relative flex flex-col glass rounded-[2.5rem] border border-black/5 dark:border-white/5 hover:border-purple-500/30 transition-all duration-500 shadow-2xl overflow-hidden cursor-pointer"
+                            className="group relative flex flex-col glass rounded-lg border border-black/10 dark:border-white/10 hover:border-purple-500/30 transition-all duration-500 shadow-2xl overflow-hidden cursor-pointer"
                         >
-                            <div className="relative aspect-[16/10] overflow-hidden p-3 pb-0">
-                                <div className="w-full h-full rounded-[2.2rem] overflow-hidden relative">
+                            <div className="relative aspect-[16/10] overflow-hidden">
+                                <div className="w-full h-full overflow-hidden relative">
                                     <img
                                         src={p.image}
                                         alt={p.title}

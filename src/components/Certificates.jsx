@@ -69,16 +69,6 @@ const Certificates = () => {
                     >
                         My <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-500">Certificate.</span>
                     </motion.h2>
-
-                    <motion.p
-                        whileInView={{ opacity: 1 }}
-                        initial={{ opacity: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-base md:text-xl font-medium px-4"
-                    >
-                        Bukti kompetensi dan pengalaman profesional yang telah diverifikasi oleh instansi ternama.
-                    </motion.p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto px-2 md:px-0">
@@ -90,16 +80,12 @@ const Certificates = () => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.2 }}
                             onClick={() => openModal(group)}
-                            className="group relative w-full cursor-pointer"
+                            className="group relative w-full cursor-pointer h-full flex flex-col"
                         >
-                            {/* Stacking Effect Simulation */}
-                            <div className="absolute -inset-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-[2rem] md:rounded-[2.5rem] blur opacity-0 group-hover:opacity-30 transition duration-700" />
+                            {/* Glow Effect on Hover */}
+                            <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-indigo-500 blur opacity-0 group-hover:opacity-20 transition duration-700" />
 
-                            {/* Visual Stack Decoration - Adjusted for mobile */}
-                            <div className="absolute -top-2 -right-2 md:-top-4 md:-right-4 w-full h-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 rounded-[1.5rem] md:rounded-[2rem] transition-transform duration-500 group-hover:translate-x-2 group-hover:-translate-y-2" />
-                            <div className="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-full h-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 rounded-[1.5rem] md:rounded-[2rem] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
-
-                            <div className="relative glass rounded-[2rem] md:rounded-[2.5rem] border border-black/5 dark:border-white/10 overflow-hidden shadow-2xl transition-all">
+                            <div className="relative glass rounded-lg border border-black/10 dark:border-white/10 overflow-hidden shadow-2xl transition-all flex flex-col h-full">
                                 <div className="aspect-[16/10] relative overflow-hidden">
                                     <img
                                         src={group.coverImage}
@@ -118,7 +104,7 @@ const Certificates = () => {
                                     </div>
                                 </div>
 
-                                <div className="p-6 md:p-8 bg-black/5 dark:bg-white/5 border-t border-black/5 dark:border-white/5">
+                                <div className="mt-auto p-6 md:p-8 bg-black/5 dark:bg-white/5 border-t border-black/5 dark:border-white/5">
                                     <div className="flex items-center justify-between text-[10px] md:text-sm">
                                         <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-bold">
                                             <Award className="w-3 h-3 md:w-4 md:h-4 text-purple-600 dark:text-purple-400" />
