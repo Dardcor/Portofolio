@@ -58,28 +58,20 @@ const Projects = () => {
                             <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-indigo-500 blur opacity-0 group-hover:opacity-20 transition duration-700" />
 
                             <div className="relative glass rounded-lg border border-black/10 dark:border-white/10 overflow-hidden shadow-2xl transition-all flex flex-col h-full">
-                                <div className="aspect-[16/10] relative overflow-hidden">
+                                <div className="aspect-[16/8] relative overflow-hidden bg-black/10 dark:bg-white/[0.02]">
                                     <img
                                         src={p.image}
                                         alt={p.title}
-                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                                        className="w-full h-full object-cover transition-all duration-1000"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-200/90 dark:from-[#0f0117] dark:via-[#0f0117]/40 via-slate-100/20 to-transparent" />
-
-                                    <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 flex justify-between items-end">
-                                        <div className="space-y-1 md:space-y-2 text-left">
-                                            <h3 className="text-xl md:text-3xl font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tighter group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-                                                {p.title}
-                                            </h3>
-                                        </div>
-                                    </div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-200/90 dark:from-[#0f0117] dark:via-[#0f0117]/40 via-slate-100/20 to-transparent pointer-events-none" />
                                 </div>
 
                                 <div className="mt-auto p-6 md:p-8 bg-black/5 dark:bg-white/5 border-t border-black/5 dark:border-white/5">
                                     <div className="flex items-center justify-between text-[10px] md:text-sm">
                                         <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-bold">
                                             <FolderCode className="w-3 h-3 md:w-4 md:h-4 text-purple-600 dark:text-purple-400" />
-                                            Live Web Showcase
+                                            {p.title}
                                         </div>
                                         <span className="text-purple-600 dark:text-purple-400 font-black uppercase tracking-widest text-[9px] md:text-[10px] group-hover:underline">Visit</span>
                                     </div>

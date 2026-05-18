@@ -13,5 +13,10 @@
         "title": "Starz-shop",
         "link": "https://louncher.github.io",
         "image": "project_3.png"
+    },
+    "project_4": {
+        "title": "SELA",
+        "link": "https://sela.web.id",
+        "image": "project_4.png"
     }
 }

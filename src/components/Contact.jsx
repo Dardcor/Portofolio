@@ -1,8 +1,20 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, MessageSquare, Linkedin, Github, Instagram } from 'lucide-react';
 import socialLinks from '../link_media/link.json';
 
 const Contact = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+    const [status, setStatus] = useState({
+        submitting: false,
+        submitted: false,
+        error: null
+    });
+
     const contactInfo = [
         { icon: <Mail />, title: 'Email', value: socialLinks.mail, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-500/10' },
         { icon: <Phone />, title: 'Phone', value: '+62 897 0973 729', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-500/10' },
@@ -14,6 +26,61 @@ const Contact = () => {
         { Icon: Linkedin, link: socialLinks.linkedin },
         { Icon: Instagram, link: socialLinks.instagram }
     ];
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+            setStatus({ submitting: false, submitted: false, error: 'Harap isi semua kolom formulir!' });
+            return;
+        }
+
+        setStatus({ submitting: true, submitted: false, error: null });
+
+        try {
+            const response = await fetch(`https://formsubmit.co/ajax/${socialLinks.mail}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    message: formData.message,
+                    _subject: `New Portfolio Message from ${formData.name}`
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success === 'true') {
+                setStatus({ submitting: false, submitted: true, error: null });
+                setFormData({ name: '', email: '', message: '' });
+                
+                // Reset success banner after 5 seconds
+                setTimeout(() => {
+                    setStatus(prev => ({ ...prev, submitted: false }));
+                }, 5000);
+            } else {
+                throw new Error('Gagal mengirim pesan.');
+            }
+        } catch (err) {
+            setStatus({
+                submitting: false,
+                submitted: false,
+                error: 'Terjadi kesalahan. Gagal mengirim pesan ke Gmail. Silakan coba kembali!'
+            });
+        }
+    };
+
     return (
         <section id="contact" className="py-32 px-6 bg-transparent overflow-hidden relative transition-colors duration-300">
             <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-purple-500/5 blur-[150px] rounded-full pointer-events-none" />
@@ -105,13 +172,17 @@ const Contact = () => {
                         viewport={{ once: true }}
                         className="lg:col-span-7 order-1 lg:order-2"
                     >
-                        <form className="p-6 md:p-14 glass rounded-[2rem] md:rounded-[3rem] border border-black/5 dark:border-white/5 shadow-2xl space-y-8 relative">
+                        <form onSubmit={handleSubmit} className="p-6 md:p-14 glass rounded-[2rem] md:rounded-[3rem] border border-black/5 dark:border-white/5 shadow-2xl space-y-8 relative">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-4">
                                     <label className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] ml-2 text-left block">Full Name</label>
                                     <input
                                         type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
                                         placeholder="Enter your name"
+                                        required
                                         className="w-full px-6 py-4 md:px-8 md:py-5 rounded-2xl md:rounded-[1.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/5 transition-all text-slate-900 dark:text-white outline-none font-bold placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-inner"
                                     />
                                 </div>
@@ -119,7 +190,11 @@ const Contact = () => {
                                     <label className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] ml-2 text-left block">Email Address</label>
                                     <input
                                         type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
                                         placeholder="your@email.com"
+                                        required
                                         className="w-full px-6 py-4 md:px-8 md:py-5 rounded-2xl md:rounded-[1.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/5 transition-all text-slate-900 dark:text-white outline-none font-bold placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-inner"
                                     />
                                 </div>
@@ -129,17 +204,47 @@ const Contact = () => {
                                 <label className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] ml-2 text-left block">Your Message</label>
                                 <textarea
                                     rows="4"
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
                                     placeholder="Tell me about your project..."
+                                    required
                                     className="w-full px-6 py-4 md:px-8 md:py-6 rounded-2xl md:rounded-[1.5rem] bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/5 transition-all text-slate-900 dark:text-white outline-none font-bold placeholder:text-slate-400 dark:placeholder:text-slate-600 resize-none shadow-inner"
                                 ></textarea>
                             </div>
 
+                            {status.error && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 font-bold text-sm text-center"
+                                >
+                                    {status.error}
+                                </motion.div>
+                            )}
+
+                            {status.submitted && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-600 dark:text-green-400 font-bold text-sm text-center"
+                                >
+                                    Pesan berhasil dikirim! Terima kasih banyak.
+                                </motion.div>
+                            )}
+
                             <motion.button
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="w-full py-5 md:py-6 bg-gradient-to-r from-[#4a044e] to-[#2e1065] text-white dark:text-white font-black rounded-2xl md:rounded-[1.5rem] text-lg md:text-xl uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(74,4,78,0.3)] hover:shadow-[0_20px_50px_rgba(74,4,78,0.5)] transition-all flex items-center justify-center gap-4 group"
+                                whileHover={{ scale: status.submitting ? 1 : 1.02 }}
+                                whileTap={{ scale: status.submitting ? 1 : 0.98 }}
+                                type="submit"
+                                disabled={status.submitting}
+                                className={`group relative w-full py-5 md:py-6 bg-purple-600 text-white dark:text-white font-black rounded-2xl md:rounded-[1.5rem] text-lg md:text-xl uppercase tracking-[0.2em] overflow-hidden transition-all shadow-[0_0_30px_rgba(147,51,234,0.4)] hover:shadow-[0_0_40px_rgba(147,51,234,0.6)] ${status.submitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}
                             >
-                                Send Message <Send className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                <span className="relative z-10 flex items-center justify-center gap-4 text-center">
+                                    {status.submitting ? 'Sending...' : 'Send Message'} 
+                                    <Send className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                </span>
+                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                             </motion.button>
                         </form>
                     </motion.div>
