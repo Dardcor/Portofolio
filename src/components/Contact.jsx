@@ -45,38 +45,47 @@ const Contact = () => {
         setStatus({ submitting: true, submitted: false, error: null });
 
         try {
+            // Menggunakan URLSearchParams (Content-Type: application/x-www-form-urlencoded)
+            // agar dianggap sebagai "CORS Simple Request" oleh browser. Ini mencegah browser
+            // mengirim request OPTIONS (preflight) yang seringkali gagal di localhost.
+            const params = new URLSearchParams();
+            params.append('name', formData.name);
+            params.append('email', formData.email);
+            params.append('message', formData.message);
+            params.append('_subject', `Pesan Portfolio Baru dari ${formData.name}`);
+
             const response = await fetch(`https://formsubmit.co/ajax/${socialLinks.mail}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    message: formData.message,
-                    _subject: `New Portfolio Message from ${formData.name}`
-                })
+                body: params.toString()
             });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
             const data = await response.json();
 
-            if (response.ok && data.success === 'true') {
+            if (data.success === true || data.success === 'true' || data.message?.toLowerCase().includes('success')) {
                 setStatus({ submitting: false, submitted: true, error: null });
                 setFormData({ name: '', email: '', message: '' });
                 
-                // Reset success banner after 5 seconds
+                // Reset success banner setelah 5 detik
                 setTimeout(() => {
                     setStatus(prev => ({ ...prev, submitted: false }));
                 }, 5000);
             } else {
-                throw new Error('Gagal mengirim pesan.');
+                throw new Error(data.message || 'Gagal mengirim pesan.');
             }
         } catch (err) {
+            console.error('Email submission error details:', err);
             setStatus({
                 submitting: false,
                 submitted: false,
-                error: 'Terjadi kesalahan. Gagal mengirim pesan ke Gmail. Silakan coba kembali!'
+                error: `Gagal mengirim otomatis (biasanya karena AdBlocker / Brave Shield memblokir API pihak ketiga di localhost). Silakan kirim email manual langsung ke: ${socialLinks.mail}`
             });
         }
     };
