@@ -5,13 +5,13 @@
         "image": "project_1.png"
     },
     "project_2": {
-        "title": "Starz-shop",
-        "link": "https://louncher.github.io",
+        "title": "Dardcor Agent",
+        "link": "https://github.com/Dardcor/Dardcor-Agent",
         "image": "project_2.png"
     },
     "project_3": {
-        "title": "Dardcor Agent",
-        "link": "https://github.com/Dardcor/Dardcor-Agent",
+        "title": "Starz-shop",
+        "link": "https://louncher.github.io",
         "image": "project_3.png"
     }
 }

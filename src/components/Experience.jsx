@@ -29,15 +29,6 @@ const Experience = () => {
             desc: 'Menyelesaikan pendidikan kejuruan dengan fokus pada instalasi jaringan, administrasi server, dan perangkat keras.',
             type: 'edu',
             tasks: ['Lulusan SMK', 'Keahlian TKJ']
-        },
-        {
-            title: 'Lulusan SMP Zainuddin Waru',
-            company: 'SMP Zainuddin Waru',
-            location: 'Sidoarjo, Indonesia',
-            date: '2017 - 2020',
-            desc: 'Menyelesaikan pendidikan jenjang sekolah menengah pertama.',
-            type: 'edu',
-            tasks: ['Lulusan SMP']
         }
     ];
 

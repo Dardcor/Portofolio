@@ -4,6 +4,8 @@ import { Download, ChevronRight, Github, Linkedin, Instagram, Mail } from 'lucid
 import profile from '../images/random/profile.png';
 import socialLinks from '../link_media/link.json';
 
+const cvFile = '/CV_Syahrul Ardi Prasetiyo.pdf';
+
 const Hero = () => {
     return (
         <section id="home" className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden py-32 px-6 bg-transparent transition-colors duration-300">
@@ -70,9 +72,13 @@ const Hero = () => {
                             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                         </a>
 
-                        <button className="px-8 py-4 glass border border-black/5 dark:border-white/10 text-slate-900 dark:text-white rounded-full font-bold text-base md:text-lg hover:bg-black/5 dark:hover:bg-white/5 transition-all flex items-center justify-center gap-2 shadow-xl hover:scale-105 active:scale-95">
+                        <a
+                            href={cvFile}
+                            download="CV_Syahrul Ardi Prasetiyo.pdf"
+                            className="px-8 py-4 glass border border-black/5 dark:border-white/10 text-slate-900 dark:text-white rounded-full font-bold text-base md:text-lg hover:bg-black/5 dark:hover:bg-white/5 transition-all flex items-center justify-center gap-2 shadow-xl hover:scale-105 active:scale-95 cursor-pointer"
+                        >
                             <Download className="w-5 h-5" /> Download CV
-                        </button>
+                        </a>
                     </motion.div>
 
                     {/* Social Links */}
