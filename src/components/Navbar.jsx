@@ -7,20 +7,34 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [activeSection, setActiveSection] = useState('home');
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
 
-    // Initial theme check
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
+
+      const sections = navLinks.map((l) => l.href.slice(1));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.offsetTop - 150 <= window.scrollY) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
     if (document.documentElement.classList.contains('dark')) {
       setIsDarkMode(true);
     } else {
       setIsDarkMode(false);
     }
-
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -48,14 +62,19 @@ const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out px-4 md:px-8 py-4"
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-4 md:px-8 py-4 ${
+        scrolled ? 'py-2' : 'py-4'
+      }`}
     >
-      <div className="mx-auto max-w-7xl transition-all duration-500 ease-in-out px-2 md:px-0">
-
-        <div className="relative px-6 py-3 md:px-10 md:py-4 transition-all duration-500 rounded-[2.5rem] glass border border-white/20 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.2)] backdrop-blur-2xl bg-white/70 dark:bg-[#0f0117]/80">
-
+      <div className="mx-auto max-w-7xl transition-all duration-500 px-2 md:px-0">
+        <div
+          className={`relative px-6 py-3 md:px-10 md:py-4 transition-all duration-500 rounded-[2.5rem] border border-white/20 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.2)] ${
+            scrolled
+              ? 'glass-strong backdrop-blur-2xl'
+              : 'bg-white/10 dark:bg-[#0f0117]/10 backdrop-blur-md'
+          }`}
+        >
           <div className="flex justify-between items-center gap-4">
-            {/* Logo Section */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -66,7 +85,7 @@ const Navbar = () => {
                 <div className="relative w-10 h-10 md:w-12 md:h-12 bg-white dark:bg-[#1e0533] rounded-full flex items-center justify-center border border-black/5 dark:border-white/10 overflow-hidden">
                   <img
                     src={myLogo}
-                    alt="Logo"
+                    alt="DARDCOR Logo"
                     className="w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500"
                   />
                 </div>
@@ -76,25 +95,27 @@ const Navbar = () => {
               </span>
             </motion.div>
 
-            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-2">
               <div className="flex items-center gap-1 px-2 py-1.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5">
-                {navLinks.map((link, i) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="relative px-4 py-2 text-[10px] font-black tracking-[0.2em] text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all uppercase rounded-xl hover:bg-purple-500/10"
-                  >
-                    {link.name}
-                    <motion.span
-                      className="absolute bottom-1 left-4 right-4 h-0.5 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100"
-                      whileHover={{ opacity: 1 }}
-                    />
-                  </motion.a>
-                ))}
+                {navLinks.map((link, i) => {
+                  const isActive = activeSection === link.href.slice(1);
+                  return (
+                    <motion.a
+                      key={link.name}
+                      href={link.href}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                      className={`relative px-4 py-2 text-[10px] font-black tracking-[0.2em] transition-all uppercase rounded-xl ${
+                        isActive
+                          ? 'text-white bg-gradient-to-r from-purple-600 to-indigo-600 shadow-lg shadow-purple-500/30'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-500/10'
+                      }`}
+                    >
+                      {link.name}
+                    </motion.a>
+                  );
+                })}
               </div>
 
               <div className="w-px h-6 bg-slate-300 dark:bg-slate-700 mx-4" />
@@ -110,7 +131,6 @@ const Navbar = () => {
               </motion.button>
             </div>
 
-            {/* Mobile Controls */}
             <div className="flex items-center gap-3 lg:hidden">
               <button
                 onClick={toggleTheme}
@@ -119,18 +139,28 @@ const Navbar = () => {
                 {!isDarkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
               </button>
               <button
-                className="relative p-2.5 bg-purple-600 text-white rounded-xl shadow-lg shadow-purple-500/30 overflow-hidden group"
+                className="relative p-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg shadow-purple-500/30 overflow-hidden group"
                 onClick={() => setIsOpen(!isOpen)}
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                {isOpen ? <X className="w-6 h-6 relative z-10" /> : <Menu className="w-6 h-6 relative z-10" />}
+                {isOpen ? (
+                  <X className="w-6 h-6 relative z-10" />
+                ) : (
+                  <Menu className="w-6 h-6 relative z-10" />
+                )}
               </button>
             </div>
+          </div>
+
+          <div className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full overflow-hidden bg-transparent">
+            <motion.div
+              className="h-full bg-gradient-to-r from-purple-600 via-indigo-500 to-purple-400"
+              style={{ width: `${scrollProgress}%` }}
+            />
           </div>
         </div>
       </div>
 
-      {/* Full Screen Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -146,23 +176,30 @@ const Navbar = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-[80%] max-w-sm glass border-l border-white/10 shadow-2xl z-[200] lg:hidden"
+              className="fixed top-0 right-0 bottom-0 w-[80%] max-w-sm glass-strong border-l border-white/10 shadow-2xl z-[200] lg:hidden"
             >
               <div className="flex flex-col h-full p-8 pt-24">
-                <div className="space-y-4">
-                  {navLinks.map((link, i) => (
-                    <motion.a
-                      key={link.name}
-                      href={link.href}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      onClick={() => setIsOpen(false)}
-                      className="block p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-purple-500/10 hover:border-purple-500/20 text-sm font-black text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all uppercase tracking-[0.3em]"
-                    >
-                      {link.name}
-                    </motion.a>
-                  ))}
+                <div className="space-y-3">
+                  {navLinks.map((link, i) => {
+                    const isActive = activeSection === link.href.slice(1);
+                    return (
+                      <motion.a
+                        key={link.name}
+                        href={link.href}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        onClick={() => setIsOpen(false)}
+                        className={`block p-4 rounded-2xl text-sm font-black uppercase tracking-[0.3em] transition-all ${
+                          isActive
+                            ? 'bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border border-purple-500/30 text-purple-600 dark:text-purple-400'
+                            : 'bg-white/5 border border-white/5 text-slate-700 dark:text-slate-300 hover:bg-purple-500/10 hover:border-purple-500/20 hover:text-purple-600 dark:hover:text-purple-400'
+                        }`}
+                      >
+                        {link.name}
+                      </motion.a>
+                    );
+                  })}
                 </div>
 
                 <div className="mt-auto pt-10 border-t border-white/10 text-center">

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dardcor.my.id/sitemap.xml

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import Portfolio from './components/Portfolio.jsx';
 import LoadingScreen from './components/LoadingScreen.jsx';
+import SEO from './components/SEO.jsx';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +15,6 @@ function App() {
     }, []);
 
     useEffect(() => {
-        // Handle theme from localStorage
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.documentElement.classList.remove('dark');
@@ -23,12 +24,11 @@ function App() {
         }
     }, []);
 
-    if (isLoading) {
-        return <LoadingScreen />;
-    }
-
     return (
-        <Portfolio />
+        <HelmetProvider>
+            <SEO />
+            {isLoading ? <LoadingScreen /> : <Portfolio />}
+        </HelmetProvider>
     );
 }
 

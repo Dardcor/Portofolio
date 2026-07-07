@@ -18,7 +18,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Base theme styles */
 html:not(.dark) body {
   background-color: #f5f3ff;
   color: #1e1b4b;
@@ -29,16 +28,13 @@ html.dark body {
   color: #f5f3ff;
 }
 
-/* Hide scrollbar for all elements */
 *::-webkit-scrollbar {
   display: none;
 }
 
 * {
   -ms-overflow-style: none;
-  /* IE and Edge */
   scrollbar-width: none;
-  /* Firefox */
 }
 
 .glass {
@@ -51,6 +47,18 @@ html.dark body {
 .dark .glass {
   background: rgba(15, 1, 23, 0.7);
   border: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .glass-strong {
+  background: rgba(15, 1, 23, 0.85);
+  border: 1px solid rgba(168, 85, 247, 0.15);
 }
 
 .neon-border-cyan {
@@ -98,4 +106,92 @@ html.dark body {
 .dark .cyber-grid {
   background-image: linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #a855f7, #6366f1, #a855f7, #c084fc, #6366f1);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: gradient-shift 4s ease infinite;
+  pointer-events: none;
+}
+
+.text-gradient-animated {
+  background: linear-gradient(135deg, #a855f7, #6366f1, #c084fc, #a855f7);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.cursor-glow {
+  position: relative;
+}
+
+.cursor-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(99, 102, 241, 0.15));
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.cursor-glow:hover::after {
+  opacity: 1;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gradient-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.mask-fade {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
