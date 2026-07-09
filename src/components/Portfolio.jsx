@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Navbar from './Navbar.jsx';
 import Hero from './Hero.jsx';
 import About from './About.jsx';
@@ -44,9 +44,9 @@ const Portfolio = () => {
     }, []);
 
     return (
-        <div className="min-h-screen selection:bg-purple-500/30 selection:text-purple-400 transition-colors duration-300 bg-transparent">
+        <div className="min-h-screen selection:bg-purple-500/30 selection:text-purple-300 bg-transparent">
             <Navbar />
-            <main className="text-slate-900 dark:text-white transition-colors duration-300">
+            <main className="transition-colors duration-300">
                 <Hero />
                 <About />
                 <TechStack />
