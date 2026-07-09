@@ -8,6 +8,7 @@ import Certificates from './Certificates.jsx';
 import Projects from './Projects.jsx';
 import Contact from './Contact.jsx';
 import Footer from './Footer.jsx';
+import ThreeScene from './ThreeScene.jsx';
 
 const Portfolio = () => {
     useEffect(() => {
@@ -44,9 +45,10 @@ const Portfolio = () => {
     }, []);
 
     return (
-        <div className="min-h-screen selection:bg-purple-500/30 selection:text-purple-300 bg-transparent">
+        <div className="min-h-screen selection:bg-purple-500/30 selection:text-purple-300 bg-transparent relative">
+            <ThreeScene />
             <Navbar />
-            <main className="transition-colors duration-300">
+            <main className="transition-colors duration-300 relative z-10">
                 <Hero />
                 <About />
                 <TechStack />

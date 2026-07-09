@@ -107,7 +107,7 @@ function ThreeScene() {
   };
 
   return (
-    <div className="absolute inset-0 z-0" onMouseMove={handleMouseMove}>
+    <div className="fixed inset-0 z-0" onMouseMove={handleMouseMove}>
       <Canvas
         camera={{ position: [0, 0.5, 10], fov: 45 }}
         dpr={[1, 1.5]}

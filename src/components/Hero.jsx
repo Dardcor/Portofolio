@@ -4,8 +4,6 @@ import { TypeAnimation } from 'react-type-animation';
 import { Download, ChevronRight, Github, Linkedin, Instagram, Mail, Sparkles } from 'lucide-react';
 import profile from '../images/random/profile.png';
 import socialLinks from '../link_media/link.json';
-import ThreeScene from './ThreeScene.jsx';
-
 const cvFile = '/CV_Syahrul Ardi Prasetiyo.pdf';
 
 const containerVariants = {
@@ -44,10 +42,6 @@ const Hero = () => {
       style={{ scale, opacity }}
       className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-transparent"
     >
-      <ThreeScene />
-
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white dark:to-[#02000a] pointer-events-none z-[1]" />
-
       <motion.div
         variants={containerVariants}
         initial="hidden"

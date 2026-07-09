@@ -94,8 +94,8 @@ const TechStack = () => {
   return (
     <section id="skills" className="py-28 bg-transparent overflow-hidden relative">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white dark:from-dark-950 to-transparent z-20 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white dark:from-dark-950 to-transparent z-20 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-transparent to-transparent z-20 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-transparent to-transparent z-20 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 mb-16 text-center relative z-10">
         <motion.div
@@ -175,8 +175,8 @@ const TechStack = () => {
         </div>
       </div>
 
-      <div className="absolute inset-y-0 left-0 w-20 md:w-64 bg-gradient-to-r from-white dark:from-dark-950 to-transparent z-20 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-20 md:w-64 bg-gradient-to-l from-white dark:from-dark-950 to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-20 md:w-64 bg-gradient-to-r from-transparent to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-20 md:w-64 bg-gradient-to-l from-transparent to-transparent z-20 pointer-events-none" />
     </section>
   );
 };
