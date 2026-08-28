@@ -1,0 +1,22 @@
+﻿{
+  "short_name": "Dardcor Portfolio",
+  "name": "Syahrul Ardi Prasetiyo Portfolio",
+  "description": "Portfolio resmi Syahrul Ardi Prasetiyo (Dardcor) — Data & AI Engineer | Full-Stack Developer",
+  "icons": [
+    {
+      "src": "/circular_logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/circular_logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#02000a",
+  "theme_color": "#02000a",
+  "display": "standalone",
+  "orientation": "portrait"
+}

@@ -1,3 +1,4 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
-Sitemap: https://dardcor.my.id/sitemap.xml
+
+Sitemap: https://www.dardcor.my.id/sitemap.xml
